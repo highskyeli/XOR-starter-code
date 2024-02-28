@@ -1,3 +1,4 @@
+import math
 characters = [
     # lowercase characters
 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -36,18 +37,62 @@ def XORonByte(byte, key):
 
     return emsg
 
-print(X0RonByte("0010", "0011"))
+
 
 def XORonLetter(letter, keyLetter):
 
     letterBin = encode(letter)
     keyLetterBin = encode(keyLetter)
 
-    encryptedLetter = XORonByte(letterBin, keyLetterbin)
+    encryptedLetter = XORonByte(letterBin, keyLetterBin)
 
     return decode(encryptedLetter)
 
-print(XORonLetter("d","r"))
+
+def XORonSentence(sentence,key):
+    encryptedSentence = ""
+    genKey = generateKey(sentence, key)
+
+    for i in range(len(sentence)):
+        
+        encryptedSentence += XORonLetter(sentence[i], genKey[i])
+
+    return encryptedSentence
+
+
+def generateKey(message, key):
+
+    if len(message) == len(key):
+
+        return key
+
+    elif len(message) < len(key):
+
+        return key[0:len(message)]
+
+    else: 
+
+        genKey = ""
+        rep = math.floor(len(message)/len(key))
+        remain = len(message) % len(key)
+
+        for i in range(rep):
+            genKey += key
+
+        genKey += key[0:remain]
+        return genKey
+
+
+print(generateKey("mississippi", "hip"))
+
+msg = input("Enter a message: ")
+key = input("Enter a key: ")
+
+print("Your encrypted message is: ", XORonSentence(msg,key))
+
+
+
+
 
 
 
